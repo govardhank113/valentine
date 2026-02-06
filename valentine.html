@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<style>
+  body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffdee9,#fff);
+    font-family:Arial, sans-serif;
+  }
+
+  .card{
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    width:360px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  }
+
+  h1{
+    color:#ff4d88;
+  }
+
+  p{
+    color:#555;
+    font-size:14px;
+  }
+
+  .buttons{
+    margin-top:25px;
+  }
+
+  button{
+    padding:10px 22px;
+    font-size:16px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    margin:8px;
+  }
+
+  #yes{
+    background:#ff4d88;
+    color:white;
+  }
+
+  #no{
+    background:#eee;
+  }
+
+  .emoji{
+    font-size:40px;
+    margin-top:15px;
+    animation:pop 0.5s ease;
+  }
+
+  @keyframes pop{
+    0%{transform:scale(0);}
+    100%{transform:scale(1);}
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Will you be my Valentine? 💕</h1>
+  <p>Please don’t break my heart 🥺</p>
+
+  <div class="buttons">
+    <button id="no" onclick="noClicked()">NO</button>
+    <button id="yes" onclick="yesClicked()">YES</button>
+  </div>
+
+  <div id="reaction"></div>
+</div>
+
+<script>
+let noCount = 0;
+
+function noClicked(){
+  const reactions = [
+    "🥹",
+    "🥺",
+    "💔",
+    "😢",
+    "Okay… that hurt 😭"
+  ];
+
+  document.getElementById("reaction").innerHTML =
+    `<div class="emoji">${reactions[noCount % reactions.length]}</div>`;
+
+  noCount++;
+
+  // After 3 NO clicks, force cute message
+  if(noCount === 3){
+    document.getElementById("reaction").innerHTML =
+      "<p style='color:#ff4d88;'>Enough teasing 😭 Just say YES 💖</p>";
+  }
+}
+
+function yesClicked(){
+  document.body.innerHTML = `
+  <div style="
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:#ffd6e8;
+    text-align:center;
+    font-family:Arial;">
+    <h1 style="color:#ff2f7d;">
+      YAAAAAY 😍💖<br><br>
+      You are officially my Valentine 💕
+    </h1>
+  </div>`;
+}
+</script>
+
+</body>
+</html>
