@@ -11,7 +11,7 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ffdee9,#fff);
+    background:linear-gradient(135deg,#ffd6e8,#fff);
     font-family:Arial, sans-serif;
   }
 
@@ -22,11 +22,10 @@
     width:360px;
     text-align:center;
     box-shadow:0 20px 40px rgba(0,0,0,0.2);
+    position:relative;
   }
 
-  h1{
-    color:#ff4d88;
-  }
+  h1{ color:#ff4d88; }
 
   p{
     color:#555;
@@ -35,6 +34,8 @@
 
   .buttons{
     margin-top:25px;
+    position:relative;
+    height:80px;
   }
 
   button{
@@ -43,7 +44,7 @@
     border:none;
     border-radius:25px;
     cursor:pointer;
-    margin:8px;
+    transition:0.2s;
   }
 
   #yes{
@@ -53,29 +54,31 @@
 
   #no{
     background:#eee;
+    position:absolute;
+    left:0;
   }
 
   .emoji{
-    font-size:40px;
+    font-size:42px;
     margin-top:15px;
-    animation:pop 0.5s ease;
+    animation:pop 0.4s ease;
   }
 
   @keyframes pop{
-    0%{transform:scale(0);}
-    100%{transform:scale(1);}
+    from{transform:scale(0);}
+    to{transform:scale(1);}
   }
 </style>
 </head>
 
 <body>
 
-<div class="card" id="card">
+<div class="card">
   <h1>Will you be my Valentine? 💕</h1>
-  <p>Please don’t break my heart 🥺</p>
+  <p>Choose wisely… the NO button is shy 🫣</p>
 
   <div class="buttons">
-    <button id="no" onclick="noClicked()">NO</button>
+    <button id="no">NO</button>
     <button id="yes" onclick="yesClicked()">YES</button>
   </div>
 
@@ -83,28 +86,27 @@
 </div>
 
 <script>
-let noCount = 0;
+const noBtn = document.getElementById("no");
+const reaction = document.getElementById("reaction");
+let clickCount = 0;
 
-function noClicked(){
-  const reactions = [
-    "🥹",
-    "🥺",
-    "💔",
-    "😢",
-    "Okay… that hurt 😭"
-  ];
+// 👉 Hover / touch = run away
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
 
-  document.getElementById("reaction").innerHTML =
-    `<div class="emoji">${reactions[noCount % reactions.length]}</div>`;
-
-  noCount++;
-
-  // After 3 NO clicks, force cute message
-  if(noCount === 3){
-    document.getElementById("reaction").innerHTML =
-      "<p style='color:#ff4d88;'>Enough teasing 😭 Just say YES 💖</p>";
-  }
+function moveButton(){
+  const x = Math.random() * 200;
+  const y = Math.random() * 40;
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
 }
+
+// 👉 If they somehow CLICK 😈
+noBtn.addEventListener("click", () => {
+  const emojis = ["🥹","🥺","💔","😭","okay… that hurt 💔"];
+  reaction.innerHTML = `<div class="emoji">${emojis[clickCount % emojis.length]}</div>`;
+  clickCount++;
+});
 
 function yesClicked(){
   document.body.innerHTML = `
@@ -125,5 +127,4 @@ function yesClicked(){
 </script>
 
 </body>
-
 </html>
